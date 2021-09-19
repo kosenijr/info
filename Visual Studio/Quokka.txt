@@ -1,0 +1,14 @@
+/* 
+Quokka | The JavaScript Scratchpad
+
+src: https://youtu.be/f_sEWa5hA0Q 
+purpose: shows returns or logs directly in the editor!
+
+To use Quokka, press ctrl + shift + p, to select which specific instance of Quokka you want.
+
+source line legend
+green: valid/executed
+gray: not yet executed
+red: not valid/error
+
+*/

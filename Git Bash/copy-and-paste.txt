@@ -1,0 +1,13 @@
+Keyboard: 
+Hold Shift and use the left/right arrows to select a text area, 
+then press Enter to copy. 
+Paste text by pressing Insert.
+
+Mouse: 
+Left-click and drag to highlight a text selecting, 
+then right click to copy. 
+Move the cursor to the desired location and right-click 
+to paste the previously copied text.
+
+These commands work with all Windows terminal applications, 
+as well as many other operating system terminals.
