@@ -1,0 +1,103 @@
+5 steps to change GitHub default branch from master to main
+Posted on July 23, 2020 by Steven M. Mortimer in R bloggers | 0 Comments
+----------------------------------------------
+
+
+[This article was first published on stevenmortimer.com, and kindly contributed to R-bloggers]. (You can report issue about the content on this page here)
+Want to share your content on R-bloggers? click here if you have a blog, or here if you don't.
+Share
+Tweet
+
+The R community is a diverse and inclusive group. About a month ago (June 2020) GitHub announced it would start to remove references to ‘master’ across its sites and I’m surprised the R community hasn’t jumped on the opportunity to be on the bleeding edge of this change. I think we can all take a very quick and very small step forward in removing divisive language in tech by changing the default branch name in R package repositories to ‘main’ instead of ‘master’. There are a wealth of other posts/tutorials that others have written. Here is a small sampling listed in order of publishing date:
+
+Easily rename your Git default branch from master to main by Scott Hanselman
+Git: Renaming the “master” branch by Richard Walters
+How To: Safely Rename master Branch on GitHub by Jake Jarvis
+Eugene Shen even made a small web app to automate the entire process for you that is available at: (https://eyqs.ca/tools/rename/). I thought I’d share the 5 simple steps that I tested and used to make the change in under 1 minute. Yes, you can do this in under a minute, so what’s stopping you? If you are concerned about compatibility, GitHub is providing updates on their renaming efforts here: https://github.com/github/renaming.
+
+Below are screenshots to walk you through each step. In addition, there is a block of code with all Terminal commands in one place at the end of this post here and GitHub repo here: https://github.com/StevenMMortimer/master-to-main.
+
+Steps
+Step 1 – Move the master branch to ‘main’
+Step 2 – Push ‘main’ to remote repo
+Step 3 – Point HEAD to ‘main’ branch
+Step 4 – Change default branch to ‘main’ on GitHub site
+Step 5 – Delete ‘master’ branch on the remote repo
+Step 1 – Move the ‘master’ branch to ‘main’
+Run the following command which creates a branch called ‘main’ using the history from ‘master’. Using the argument -m will transfer all of the commit history on the ‘master’ branch to your new ‘main’ branch so nothing gets lost.
+
+git branch -m master main
+Step 2 – Push ‘main’ to remote repo
+Remember that git is version control software on your local machine and GitHub is the remote server that stores your code. For this reason, you’ll have to push your new ‘main’ branch up to GitHub and tell the local branch to start tracking the remote branch with the same name.
+
+git push -u origin main
+Step 3 – Point HEAD to ‘main’ branch
+At this stage if ‘master’ was your default branch you cannot remove it without first changing HEAD, the pointer to the current branch reference. This following command will point it to ‘main’.
+
+git symbolic-ref refs/remotes/origin/HEAD refs/remotes/origin/main
+All three steps are shown in the screenshot below:
+
+
+At this point you can take a breather. You’re on the home stretch! If you want to check that things are going as planned then you’re welcome to run the following that should show the HEAD is pointing to main which now frees you up to delete ‘master’. Note: When you enter this command in your Terminal you will have to type :q to exit it. Not CTRL+C, ESC, etc.
+
+git branch -a
+
+Step 4 – Change default branch to ‘main’ on GitHub site
+At this point you’ve succesfully transitioned everything to the ‘main’ branch, but you can’t delete the ‘master’ branch without changing the default branch in GitHub to something other than ‘master’. This is the only step that requires you to leave the Terminal and navigate in your browser to your GitHub repository. From there, click "Settings" -> "Branches" on the left rail and change the default branch to ‘main’. I’ve included some screenshots below and GitHub provides instructions for doing this here: https://docs.github.com/en/github/administering-a-repository/setting-the-default-branch.
+
+
+
+
+Step 5 – Delete ‘master’ branch on the remote repo
+Now that the local ‘master’ is gone and there’s nothing pointing to it on Github you can delete it with the following command:
+
+git push origin --delete master
+
+That’s it! You’re done! You should no longer see “master” or “remotes/origin/master” locally or on your GitHub repository. If you want to check, you can always run the following:
+
+git branch -a
+
+Feel free to let me know if this worked for you or if you had issues! Note: I take no responsibility for messing up your git repo. In case this wasn’t clear enough, all instructions are available in its own repo here: https://github.com/StevenMMortimer/master-to-main.
+
+All commands
+# Step 1 
+# create main branch locally, taking the history from master
+git branch -m master main
+# Step 2 
+# push the new local main branch to the remote repo (GitHub) 
+git push -u origin main
+# Step 3
+# switch the current HEAD to the main branch
+git symbolic-ref refs/remotes/origin/HEAD refs/remotes/origin/main
+# Step 4
+# change the default branch on GitHub to main
+# https://docs.github.com/en/github/administering-a-repository/setting-the-default-branch
+# Step 5
+# delete the master branch on the remote
+git push origin --delete master
+Related
+Blogging with GitHub and Hugo
+As a fairly late comer at the blogging party, I benefit greatly from others in gaining knowledge to create my own site. The main documentation I followed while creating this blog is Amber Thomas’ post Making a website using Blogdown, Hugo and GitHub pages. It is a well written tutorial…
+
+March 22, 2017
+
+In "R bloggers"
+
+A Newbie's Guide to Making A Pull Request (for an R package)
+I had the wonderful opportunity to participate in the {tidyverse} Developer Day the day after rstudio::conf2019 officially wrapped up. 1One of the objectives of the event was to encourage open-source contributor newbies (like me ????) to gain some experience, namely through submitting pull requests to address issues with {tidyverse} packages.…
+
+January 19, 2019
+
+In "R bloggers"
+
+Version control – The uncomplicated work on a common project
+Version control – The uncomplicated work on a common project
+November 28, 2019
+
+In "R bloggers"
+
+Share
+Tweet
+To leave a comment for the author, please follow the link and comment on their blog: stevenmortimer.com.
+R-bloggers.com offers daily e-mail updates about R news and tutorials about learning R and many other topics. Click here if you're looking to post or find an R/data-science job.
+Want to share your content on R-bloggers? click here if you have a blog, or here if you don't.
